@@ -1,4 +1,6 @@
 import pkg from './package'
+// eslint-disable
+const ampify = require('./plugins/ampify')
 
 export default {
   mode: 'universal',
@@ -14,6 +16,7 @@ export default {
       { hid: 'description', name: 'description', content: pkg.description }
     ],
     link: [
+      { rel: 'canonical', href: '/' },
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
@@ -21,12 +24,17 @@ export default {
   /*
   ** Customize the progress-bar color
   */
-  loading: { color: '#fff' },
-
+  // loading: { color: '#fff' },
+  loading: false, // Disable loading bar since AMP will not generate a dynamic page
+  render: {
+    // Disable resourceHints since we don't load any scripts for AMP
+    resourceHints: false
+  },
   /*
   ** Global CSS
   */
   css: [
+    '~/assets/style/index.css'
   ],
 
   /*
@@ -65,6 +73,23 @@ export default {
           loader: 'eslint-loader',
           exclude: /(node_modules)/
         })
+      }
+    }
+  },
+  /*
+  ** Hooks configuration
+  */
+  hooks: {
+    // This hook is called before saving the html to flat file
+    'generate:page': (page) => {
+      if (/^\/amp\//gi.test(page.route)) {
+        page.html = ampify(page.html)
+      }
+    },
+    // This hook is called before serving the html to the browser
+    'render:route': (url, page, { req, res }) => {
+      if (/^\/amp\//gi.test(url)) {
+        page.html = ampify(page.html)
       }
     }
   }
