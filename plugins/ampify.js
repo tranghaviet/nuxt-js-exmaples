@@ -6,15 +6,17 @@ module.exports = (html) => {
   html = html.replace(/<html/gi, '<html ⚡')
 
   // Combine css into single tag
-  let styleConcat = ''
+  // let styleConcat = ''
   // html = html.replace(/<style[^>]*data-vue-ssr[^>]*>(.*?)?<\/style>/gi, (match, sub) => {
-  html = html.replace(/<style\sdata-vue-ssr-id=\".*\">(.|\n)*?<\/style>/gi, (match, sub) => {
-    // TODO: cannot get style content
-    styleConcat += sub
-    return ''
-  })
+  // html = html.replace(/<style\sdata-vue-ssr-id=\".*\">(.|\n)*?<\/style>/gi, (match, sub) => {
+  //   // TODO: cannot get style content
+  //   styleConcat += sub
+  //   return ''
+  // })
+  // html = html.replace('</head>', `<style amp-custom>${styleConcat}</style></head>`)
+  html = html.replace(/<style data-vue-ssr-id\W[^>]*/g, '<style amp-custom')
+  html = html.replace(/<\/style><style amp-custom>/gi, '')
 
-  html = html.replace('</head>', `<style amp-custom>${styleConcat}</style></head>`)
   // Add amp-custom tag to added CSS
   // html = html.replace(/<style data-vue-ssr/g, '<style amp-custom data-vue-ssr')
 
