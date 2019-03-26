@@ -34,7 +34,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 .container {
   margin: 0 auto;
   min-height: 100vh;
@@ -50,7 +50,7 @@ export default {
   display: block;
   font-weight: 300;
   font-size: 100px;
-  color: #35495e;
+  color: $primary;
   letter-spacing: 1px;
 }
 
