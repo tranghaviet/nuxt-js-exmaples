@@ -1,7 +1,8 @@
 import pkg from './package'
 
 export default {
-  mode: 'universal',
+  // mode: 'universal',
+  mode: 'spa',
 
   /*
   ** Headers of the page
@@ -27,6 +28,7 @@ export default {
   ** Global CSS
   */
   css: [
+    './assets/style/index.scss'
   ],
 
   /*
